@@ -3,10 +3,10 @@ import requests
 import numpy as np
 import pickle
 app = Flask(__name__)
-model = pickle.load(open('C:/miniconda/Conda/envs/myenv/car_price/car_price1.pkl', 'rb'))
+model = pickle.load(open('car_price1.pkl', 'rb'))
 @app.route('/',methods=['GET'])
 def home():
-    return render_template('d:templates/car_price.html')
+    return render_template('car_price.html')
 
 @app.route('/prediction',methods=['POST'])
 def predict():
@@ -42,10 +42,10 @@ def predict():
         predictions = model.predict([[Present_Price,Kms_Driven2,Owner,Years_Driven,Fuel_Type_Diesel,Fuel_Type_Petrol,Seller_Type_Individual,Transmission_Manual]])
         output = round(predictions[0],2)
         if output<0:
-            return render_template('d:templates/car_price.html',predictions_text="Sorry,You can't sell this car")
+            return render_template('car_price.html',predictions_text="Sorry,You can't sell this car")
         else:
-            return render_template("d:templates/car_price.html",predictions_text='Your car price is {}'.format(output))
+            return render_template("car_price.html",predictions_text='Your car price is {}'.format(output))
     else:
-        return render_template('d:templates/car_price.html')
+        return render_template('car_price.html')
 if __name__ == '__main__':
     app.run()
